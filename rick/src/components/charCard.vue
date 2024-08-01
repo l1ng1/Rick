@@ -26,7 +26,6 @@ export default {
     },
     created(){
         this.char = this.store.getCurrChar
-        console.log(this.char);
     }
 }
 </script>

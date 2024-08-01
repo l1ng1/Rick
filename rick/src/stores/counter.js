@@ -44,6 +44,14 @@ export const useMainStore = defineStore('mainStore', {
         },
         charPgPlus(){
             this.charPg++;
+        },
+        charPgMinus(){
+            if(this.charPg !== 0){
+                this.charPg=this.charPg - 1;
+                console.log(this.charPg);
+            }
+            return
+            
         }
 
 

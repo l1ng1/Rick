@@ -10,7 +10,7 @@
         </div>
     </div>
     <div class="btns">
-        <button>xd</button>
+        <button @click="pastPage">xd</button>
         <button @click="nextPage">xd2</button>
     </div>
 
@@ -35,6 +35,11 @@ export default {
     methods:{
         nextPage(){
             this.store.charPgPlus();
+            this.store.getChars();
+            setTimeout(()=>{this.chars = this.store.getCurrList;},200)
+        },
+        pastPage(){
+            this.store.charPgMinus();
             this.store.getChars();
             setTimeout(()=>{this.chars = this.store.getCurrList;},200)
         }
