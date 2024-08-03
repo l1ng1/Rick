@@ -1,5 +1,6 @@
 <template>
     <div class="card">
+        <button class="back" @click="()=>{this.$router.go(-1)}">Back</button>
         <h1>{{ epis.name }}</h1>
         <h2>Release date: {{ epis.air_date }}</h2>
         <h2>Characters:</h2>
@@ -37,6 +38,15 @@ export default {
 
 
 <style scoped>
+
+.back{
+    border: 1px black solid;
+    padding: 4px 8px;
+    font-size: 20px;
+    background-color: white;
+}
+
+
 .card{
     width: 70%;
     margin: 0 auto;

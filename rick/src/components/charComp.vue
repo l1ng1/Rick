@@ -1,7 +1,15 @@
 <template>
     <div>
+        <br>
+        <br>
+        <div class="btns">
+            <button @click="pastPage">Prev</button>
+            <p>{{ this.store.charPg }} / {{ this.store.totalCharPages }}</p>
+            <button @click="nextPage">Next</button>
+        </div>
+        <br>
+        <br>
     <div class="chars">
-
         <div class="char" v-for="(item,index) in chars" :key="index">
             <RouterLink to="/currentCharacter" @click="()=>{this.store.setCurrChar(item)}">
             <img :src="item.image">
@@ -9,10 +17,7 @@
             </RouterLink>
         </div>
     </div>
-    <div class="btns">
-        <button @click="pastPage">xd</button>
-        <button @click="nextPage">xd2</button>
-    </div>
+    
 
 </div>
 </template>

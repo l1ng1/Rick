@@ -9,51 +9,78 @@ export const useMainStore = defineStore('mainStore', {
         charPg:1,
         episPg:1,
         locationPg:1,
+        totalEpisPages:0,
+        totalCharPages:0,
+        totalLocPages:0,
     }),
     getters:{
         getCurrChar(state){return state.currentChar},
         getCurrEpisode(state){return state.currentEpisode},
         getCurrLocation(state){return state.currentLocation},
         getCurrList(state){
-            console.log(state.currentList)
             return state.currentList
         },
     },
     actions:{
+
+        ///запрос на сервер
         async getChars(){
             let CharReq = await fetch('https://rickandmortyapi.com/api/character?page='+this.charPg,{});
             let CharRes = await CharReq.json();
+            this.totalCharPages = CharRes.info.pages;
             this.currentList = CharRes.results;
-            console.log(this.currentList);
-        },
-        setCurrChar(char){
-            this.currentChar = char;
         },
         async getEpisodes(){
-            let EpisReq = await fetch('https://rickandmortyapi.com/api/episode',{});
+            console.log('URL:'+'https://rickandmortyapi.com/api/episode?page='+this.episPg)
+            let EpisReq = await fetch('https://rickandmortyapi.com/api/episode?page='+this.episPg,{});
             let EpisRes = await EpisReq.json();
+            this.totalEpisPages = EpisRes.info.pages;
             this.currentList = EpisRes.results;
-        },
-        setCurrEpisode(epis){
-            this.currentEpisode = epis;
+            console.log(this.currentList);
         },
         async getCharByUrl(urls){
             let a = await Promise.all(urls.map(url => fetch(url)));
             let data = await Promise.all(a.map(response => response.json()));
             return data;
         },
+        async getLocations(){
+
+        },
+
+
+        ///выбраный персонаж,эпизод,локация
+        setCurrChar(char){
+            this.currentChar = char;
+        },
+        setCurrEpisode(epis){
+            this.currentEpisode = epis;
+        },
+
+        ///Работа с страницами
         charPgPlus(){
-            this.charPg++;
+            if(this.charPg != this.totalCharPages){
+                this.charPg++;
+            }
+            else return;
         },
         charPgMinus(){
             if(this.charPg !== 0){
                 this.charPg=this.charPg - 1;
-                console.log(this.charPg);
             }
-            return
-            
+            else return
+        },
+        EpisPgPlus(){
+            if(this.episPg != this.totalEpisPages){
+                this.episPg = this.episPg + 1;
+                console.log("+")
+            }
+            else return;
+        },
+        EpisPgMinus(){
+            if(this.episPg == 1) return;
+            this.episPg =this.episPg - 1;
+            console.log("-");       
         }
-
 
     }
 })
