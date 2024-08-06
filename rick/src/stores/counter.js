@@ -31,7 +31,6 @@ export const useMainStore = defineStore('mainStore', {
             this.currentList = CharRes.results;
         },
         async getEpisodes(){
-            console.log('URL:'+'https://rickandmortyapi.com/api/episode?page='+this.episPg)
             let EpisReq = await fetch('https://rickandmortyapi.com/api/episode?page='+this.episPg,{});
             let EpisRes = await EpisReq.json();
             this.totalEpisPages = EpisRes.info.pages;
@@ -44,7 +43,11 @@ export const useMainStore = defineStore('mainStore', {
             return data;
         },
         async getLocations(){
-
+            let LocReq = await fetch('https://rickandmortyapi.com/api/location?page='+this.locationPg,{});
+            let LocRes = await LocReq.json();
+            this.totalLocPages = LocRes.info.pages;
+            this.currentList = LocRes.results;
+            console.log(LocRes);
         },
 
 
@@ -54,6 +57,9 @@ export const useMainStore = defineStore('mainStore', {
         },
         setCurrEpisode(epis){
             this.currentEpisode = epis;
+        },
+        setCurrLoc(loc){
+            this.currentLocation = loc;
         },
 
         ///Работа с страницами
@@ -80,6 +86,16 @@ export const useMainStore = defineStore('mainStore', {
             if(this.episPg == 1) return;
             this.episPg =this.episPg - 1;
             console.log("-");       
+        },
+        locPgPlus(){
+            if(this.locationPg != this.totalLocPages){
+                this.locationPg = this.locationPg + 1;
+            }
+            else return;
+        },
+        locPgMinus(){
+            if(this.locationPg == 1) return;
+            this.locationPg =this.locationPg - 1;     
         }
 
     }
